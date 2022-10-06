@@ -16,6 +16,8 @@ import rehypeAddClasses from 'rehype-add-classes'
 import retextEnglish from 'retext-english'
 import retextIndefiniteArticle from 'retext-indefinite-article'
 
+import Content from './_book/index.mdx'
+
 const BOOK_PATH = '_book/index.mdx'
 const DEST_PATH = 'output'
 
