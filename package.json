@@ -5,8 +5,8 @@
   "type": "module",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon --experimental-loader=mdx-loader.js index.js",
-    "start": "node --experimental-loader=mdx-loader.js index.js"
+    "dev": "nodemon --experimental-loader=./mdx-loader.js index.js",
+    "start": "node --experimental-loader=./mdx-loader.js index.js"
   },
   "keywords": [],
   "author": "akshay kadam (a2k)",
