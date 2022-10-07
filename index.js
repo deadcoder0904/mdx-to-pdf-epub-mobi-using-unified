@@ -13,6 +13,7 @@ import rehypeStringify from 'rehype-stringify'
 import rehypeDocument from 'rehype-document'
 import rehypeFormat from 'rehype-format'
 import rehypeAddClasses from 'rehype-add-classes'
+import rehypeAutolinkHeadings from 'rehype-autolink-headings'
 import retextEnglish from 'retext-english'
 import retextIndefiniteArticle from 'retext-indefinite-article'
 
@@ -38,6 +39,7 @@ const processor = unified()
     h2: 'is-2',
     p: 'one two',
   })
+  .use(rehypeAutolinkHeadings)
 
 processor.process(readSync(BOOK_PATH)).then(
   (file) => {

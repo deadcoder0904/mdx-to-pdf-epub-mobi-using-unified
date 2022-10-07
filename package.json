@@ -5,9 +5,8 @@
   "type": "module",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon --experimental-loader=@mdx-js/node-loader index.js",
-    "start": "node --experimental-loader=@mdx-js/node-loader index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "nodemon --experimental-loader=mdx-loader.js index.js",
+    "start": "node --experimental-loader=mdx-loader.js index.js"
   },
   "keywords": [],
   "author": "akshay kadam (a2k)",
@@ -16,6 +15,7 @@
     "@mdx-js/node-loader": "^2.1.4",
     "react": "^18.2.0",
     "rehype-add-classes": "^1.0.0",
+    "rehype-autolink-headings": "^6.1.1",
     "rehype-document": "^6.1.0",
     "rehype-format": "^4.0.1",
     "rehype-raw": "^6.1.1",
@@ -32,6 +32,7 @@
     "vfile-reporter": "^7.0.4"
   },
   "devDependencies": {
+    "esm-loader-images": "^1.0.2",
     "nodemon": "^2.0.20"
   }
 }
