@@ -1,9 +1,11 @@
 import fs from 'node:fs'
 import path from 'node:path'
+import React from 'react'
+import { renderToStaticMarkup } from 'react-dom/server'
 import { unified } from 'unified'
 import { readSync, writeSync } from 'to-vfile'
 import { reporter } from 'vfile-reporter'
-import remarkParse from 'remark-parse'
+import rehypeParse from 'rehype-parse'
 import remarkRetext from 'remark-retext'
 import remarkRehype from 'remark-rehype'
 import remarkFrontmatter from 'remark-frontmatter'
@@ -19,11 +21,13 @@ import retextIndefiniteArticle from 'retext-indefinite-article'
 
 import Content from './_book/index.mdx'
 
+const markup = renderToStaticMarkup(React.createElement(Content))
+
 const BOOK_PATH = '_book/index.mdx'
 const DEST_PATH = 'output'
 
 const processor = unified()
-  .use(remarkParse)
+  .use(rehypeParse, { fragment: true })
   .use(remarkRetext, unified().use(retextEnglish).use(retextIndefiniteArticle))
   .use(remarkFrontmatter)
   .use(remarkRehype, { allowDangerousHtml: true })
@@ -41,7 +45,10 @@ const processor = unified()
   })
   .use(rehypeAutolinkHeadings)
 
-processor.process(readSync(BOOK_PATH)).then(
+const ile = processor.process(markup)
+console.log({ ile })
+
+ile.then(
   (file) => {
     console.error(reporter(file))
     if (!fs.existsSync(DEST_PATH)) {
