@@ -5,8 +5,8 @@
   "type": "module",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon --experimental-loader=./mdx-loader.js index.js",
-    "start": "node --experimental-loader=./mdx-loader.js index.js"
+    "dev": "NODE_OPTIONS='--loader node-esm-loader' nodemon --experimental-loader=./mdx-loader.js index.js",
+    "start": "NODE_OPTIONS='--loader node-esm-loader' node --experimental-loader=./mdx-loader.js index.js"
   },
   "keywords": [],
   "author": "akshay kadam (a2k)",
@@ -25,10 +25,9 @@
     "rehype-stringify": "^9.0.3",
     "remark-frontmatter": "^4.0.1",
     "remark-gfm": "^3.0.1",
+    "remark-parse": "^10.0.1",
+    "remark-parse-frontmatter": "^1.0.3",
     "remark-rehype": "^10.1.0",
-    "remark-retext": "^5.0.1",
-    "retext-english": "^4.1.0",
-    "retext-indefinite-article": "^4.1.0",
     "to-vfile": "^7.2.3",
     "unified": "^10.1.2",
     "vfile-reporter": "^7.0.4"

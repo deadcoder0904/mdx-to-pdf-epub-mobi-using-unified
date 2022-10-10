@@ -8,4 +8,4 @@ const { load, getFormat, transformSource } = createLoader({
   remarkPlugins: [remarkGfm, remarkFrontmatter],
 })
 
-export { load, getFormat, transformSource }
+export { load }
