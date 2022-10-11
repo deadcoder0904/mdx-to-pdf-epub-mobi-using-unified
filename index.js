@@ -20,7 +20,6 @@ import { reporter } from 'vfile-reporter'
 /**
  * remark imports
  */
-import remarkMdxFrontmatter from 'remark-mdx-frontmatter'
 
 /**
  * rehype imports
@@ -36,6 +35,7 @@ import rehypeAutolinkHeadings from 'rehype-autolink-headings'
  * local imports
  */
 import Content from './_book/index.mdx'
+import * as meta from './_book/index.mdx'
 
 const markup = renderToStaticMarkup(React.createElement(Content))
 
@@ -44,7 +44,7 @@ const DEST_PATH = 'output'
 
 const processor = unified()
   .use(rehypeParse, { fragment: true })
-  .use(rehypeDocument, { title: 'Content' }) // document should be after sanitize
+  .use(rehypeDocument, { title: meta.title || 'book' }) // document should be after sanitize
   .use(rehypeStringify)
   .use(rehypeFormat)
   .use(rehypeAddClasses, {
@@ -54,7 +54,6 @@ const processor = unified()
     h2: 'is-2',
     p: 'one two',
   })
-// .use(remarkMdxFrontmatter)
 // .use(rehypeAutolinkHeadings)
 
 const html = processor.process(markup)
