@@ -20,16 +20,12 @@ import { reporter } from 'vfile-reporter'
 /**
  * remark imports
  */
-import remarkParse from 'remark-parse'
-import remarkRehype from 'remark-rehype'
-import remarkFrontmatter from 'remark-frontmatter'
-import remarkParseFrontmatter from 'remark-parse-frontmatter'
+import remarkMdxFrontmatter from 'remark-mdx-frontmatter'
 
 /**
  * rehype imports
  */
-import rehypeRaw from 'rehype-raw'
-import rehypeSanitize from 'rehype-sanitize'
+import rehypeParse from 'rehype-parse'
 import rehypeStringify from 'rehype-stringify'
 import rehypeDocument from 'rehype-document'
 import rehypeFormat from 'rehype-format'
@@ -47,12 +43,7 @@ const BOOK_PATH = '_book/index.mdx'
 const DEST_PATH = 'output'
 
 const processor = unified()
-  .use(remarkParse)
-  // .use(remarkFrontmatter)
-  // .use(remarkParseFrontmatter)
-  .use(remarkRehype, { allowDangerousHtml: true })
-  .use(rehypeRaw)
-  .use(rehypeSanitize)
+  .use(rehypeParse, { fragment: true })
   .use(rehypeDocument, { title: 'Content' }) // document should be after sanitize
   .use(rehypeStringify)
   .use(rehypeFormat)
@@ -63,6 +54,7 @@ const processor = unified()
     h2: 'is-2',
     p: 'one two',
   })
+// .use(remarkMdxFrontmatter)
 // .use(rehypeAutolinkHeadings)
 
 const html = processor.process(markup)
