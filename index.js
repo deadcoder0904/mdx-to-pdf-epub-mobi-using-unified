@@ -5,6 +5,12 @@ import fs from 'node:fs'
 import path from 'node:path'
 
 /**
+ * npm imports
+ */
+import fg from 'fast-glob'
+import { copyFile } from 'cp-file'
+
+/**
  * react imports
  */
 import React from 'react'
@@ -42,24 +48,30 @@ const markup = renderToStaticMarkup(React.createElement(Content))
 const BOOK_PATH = '_book/index.mdx'
 const DEST_PATH = 'output'
 
-const processor = unified()
-  .use(rehypeParse, { fragment: true })
-  .use(rehypeDocument, { title: meta.title || 'book' }) // document should be after sanitize
-  .use(rehypeStringify)
-  .use(rehypeFormat)
-  .use(rehypeAddClasses, {
-    pre: 'hljs',
-    'h1,h2,h3': 'title',
-    h1: 'is-1',
-    h2: 'is-2',
-    p: 'one two',
+const main = async () => {
+  // copy all images from `_book/` to `output/`
+  const images = fg.sync(['**/*.{jpg,png}'])
+  images.forEach(async (image) => {
+    const filename = image.split('/').pop()
+    await copyFile(image, `output/${filename}`)
   })
-// .use(rehypeAutolinkHeadings)
 
-const html = processor.process(markup)
+  const processor = await unified()
+    .use(rehypeParse, { fragment: true })
+    .use(rehypeDocument, { title: meta.title || 'book', css: 'styles/pdf.css' }) // document should be after sanitize
+    .use(rehypeStringify)
+    .use(rehypeFormat)
+    .use(rehypeAddClasses, {
+      pre: 'hljs',
+      'h1,h2,h3': 'title',
+      h1: 'is-1',
+      h2: 'is-2',
+      p: 'one two',
+    })
+  // .use(rehypeAutolinkHeadings)
 
-html.then(
-  (file) => {
+  try {
+    const file = await processor.process(markup)
     console.error(reporter(file))
     if (!fs.existsSync(DEST_PATH)) {
       fs.mkdirSync(DEST_PATH)
@@ -67,8 +79,9 @@ html.then(
     file.path = path.join(DEST_PATH, 'index')
     file.extname = '.html'
     writeSync(file)
-  },
-  (error) => {
+  } catch (error) {
     throw error
   }
-)
+}
+
+main()
