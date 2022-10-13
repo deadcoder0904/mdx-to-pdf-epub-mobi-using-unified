@@ -58,7 +58,10 @@ const main = async () => {
 
   const processor = await unified()
     .use(rehypeParse, { fragment: true })
-    .use(rehypeDocument, { title: meta.title || 'book', css: 'styles/pdf.css' }) // document should be after sanitize
+    .use(rehypeDocument, {
+      title: meta.title || 'book',
+      css: 'styles/pdf.css',
+    }) // document should be after sanitize
     .use(rehypeStringify)
     .use(rehypeFormat)
     .use(rehypeAddClasses, {

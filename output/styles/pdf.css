@@ -1,11 +1,12 @@
-/* this stylesheet is used when generating a PDF with PrinceXML or any other tool that understands the CSS used. */
+/* this stylesheet is used when generating a PDF with PrinceXML */
 /* define a page */
 @page {
   size: 5.5in 8.5in;
   margin: 70pt 60pt 70pt;
 }
 
-@page: first {
+/* cover */
+@page :first {
   size: 5.5in 8.5in;
   margin: 0;
 }
@@ -23,7 +24,7 @@ div.frontcover {
 
 /* styles for the right hand spread
 Bottom left we display the title of the book, bottom right the page using a CSS counter, top right the content of the current chapter */
-@page: right {
+@page :right {
   @bottom-left {
     margin: 10pt 0 30pt 0;
     border-top: 0.25pt solid #666;
@@ -47,7 +48,7 @@ Bottom left we display the title of the book, bottom right the page using a CSS 
 
 /* styles for the left hand spread 
 Bottom right book title, bottom left current page */
-@page: left {
+@page :left {
   @bottom-right {
     margin: 10pt 0 30pt 0;
     border-top: 0.25pt solid #666;
@@ -64,7 +65,7 @@ Bottom right book title, bottom left current page */
 }
 
 /* first page */
-@page: first {
+@page :first {
   @bottom-right {
     content: normal;
     margin: 0;
