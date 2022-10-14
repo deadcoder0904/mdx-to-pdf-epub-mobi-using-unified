@@ -61,22 +61,33 @@ const main = async () => {
     .use(rehypeParse, { fragment: true })
     .use(rehypeDocument, {
       title: meta.title || 'book',
-      css: 'styles/pdf.css',
+      css: 'styles/tailwind.css',
     }) // document should be after sanitize
     .use(rehypeRewrite, {
       rewrite: (node) => {
         if (node.type == 'element' && node.tagName == 'body') {
-          node.children = [
-            {
-              type: 'element',
-              tagName: 'img',
-              properties: {
-                src: meta.cover || '',
-                alt: 'cover',
-              },
+          const cover = {
+            type: 'element',
+            tagName: 'div',
+            properties: {
+              class: 'frontcover',
             },
-            ...node.children,
-          ]
+          }
+          const blank = {
+            type: 'element',
+            tagName: 'div',
+            properties: {
+              class: 'blank',
+            },
+          }
+          const toc = {
+            type: 'element',
+            tagName: 'ul',
+            properties: {
+              class: 'toc',
+            },
+          }
+          node.children = [cover, toc, ...node.children]
         }
       },
     })
