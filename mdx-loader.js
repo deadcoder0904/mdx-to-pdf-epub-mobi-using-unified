@@ -10,7 +10,12 @@ const { load, getFormat, transformSource } = createLoader({
   remarkPlugins: [
     remarkGfm,
     remarkFrontmatter,
-    remarkMdxFrontmatter,
+    [
+      remarkMdxFrontmatter,
+      {
+        name: 'frontmatter',
+      },
+    ],
     remarkUnwrapImages,
   ],
 })

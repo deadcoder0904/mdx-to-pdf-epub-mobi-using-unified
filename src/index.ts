@@ -30,6 +30,7 @@ import { reporter } from 'vfile-reporter'
 /**
  * rehype imports
  */
+import { ElementContent } from 'hast'
 import rehypeParse from 'rehype-parse'
 import rehypeStringify from 'rehype-stringify'
 import rehypeDocument from 'rehype-document'
@@ -42,9 +43,10 @@ import rehypeAutolinkHeadings from 'rehype-autolink-headings'
  * local imports
  */
 import Content from './_book/index.mdx'
-import * as meta from './_book/index.mdx'
 
-const markup = renderToStaticMarkup(React.createElement(Content))
+import * as meta from './_book/index.mdx'
+console.log({ Content, meta })
+const markup = renderToStaticMarkup(React.createElement(Content as any))
 
 const BOOK_PATH = '_book/index.mdx'
 const DEST_PATH = 'output'
@@ -57,7 +59,7 @@ const main = async () => {
     await copyFile(image, `output/${filename}`)
   })
 
-  const processor = await unified()
+  const processor = unified()
     .use(rehypeParse, { fragment: true })
     .use(rehypeDocument, {
       title: meta.frontmatter.title || 'book',
@@ -66,26 +68,29 @@ const main = async () => {
     .use(rehypeRewrite, {
       rewrite: (node) => {
         if (node.type == 'element' && node.tagName == 'body') {
-          const cover = {
+          const cover: ElementContent = {
             type: 'element',
             tagName: 'div',
             properties: {
               class: 'frontcover',
             },
+            children: [],
           }
-          const blank = {
+          const blank: ElementContent = {
             type: 'element',
             tagName: 'div',
             properties: {
               class: 'blank',
             },
+            children: [],
           }
-          const toc = {
+          const toc: ElementContent = {
             type: 'element',
             tagName: 'ul',
             properties: {
               class: 'toc',
             },
+            children: [],
           }
           node.children = [cover, toc, ...node.children]
         }
