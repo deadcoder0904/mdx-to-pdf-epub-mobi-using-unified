@@ -46,7 +46,7 @@ import Content from './_book/index.mdx'
 
 import * as meta from './_book/index.mdx'
 console.log({ Content, meta })
-const markup = renderToStaticMarkup(React.createElement(Content as any))
+const markup = renderToStaticMarkup(React.createElement(Content))
 
 const BOOK_PATH = '_book/index.mdx'
 const DEST_PATH = 'output'

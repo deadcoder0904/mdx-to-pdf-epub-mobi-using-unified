@@ -1,3 +1,5 @@
+export { default } from '*.mdx'
+
 type Meta = {
   title: string
   description: string
