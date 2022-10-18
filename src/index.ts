@@ -45,7 +45,7 @@ import rehypeAutolinkHeadings from 'rehype-autolink-headings'
 import Content from './_book/index.mdx'
 
 import * as meta from './_book/index.mdx'
-console.log({ Content, meta })
+
 const markup = renderToStaticMarkup(React.createElement(Content))
 
 const BOOK_PATH = '_book/index.mdx'
