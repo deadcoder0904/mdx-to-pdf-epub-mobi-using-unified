@@ -4,11 +4,11 @@
   "description": "",
   "scripts": {
     "prestart": "npm run clean",
-    "dev": "parcel index.html --open",
-    "build": "parcel build index.html",
+    "dev": "parcel src/index.html --open",
+    "build": "parcel build src/index.html",
     "start": "npm run build",
     "clean": "rimraf dist",
-    "generate:pdf": "prince dist/index.html -s output/styles/tailwind.css -o output/index.pdf"
+    "generate:pdf": "prince dist/index.html -s output/src/styles/tailwind.css -o output/index.pdf"
   },
   "keywords": [],
   "author": "Akshay Kadam",

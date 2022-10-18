@@ -47,21 +47,24 @@ import * as meta from './_book/index.mdx'
 const markup = renderToStaticMarkup(React.createElement(Content))
 
 const BOOK_PATH = '_book/index.mdx'
-const DEST_PATH = 'output'
+const DEST_PATH = 'output/src'
 
 const main = async () => {
-  // copy all images from `_book/` to `output/`
-  const images = fg.sync(['**/*.{jpg,png}'])
+  // copy all images from `_book/` to `output/src/images`
+  const images = fg.sync(['_book/**/*.{jpg,png}'], {
+    ignore: ['**/node_modules/**'],
+  })
+  console.log(images, images.length)
   images.forEach(async (image) => {
     const filename = image.split('/').pop()
-    await copyFile(image, `output/${filename}`)
+    await copyFile(image, `${DEST_PATH}/images/${filename}`)
   })
 
   const processor = await unified()
     .use(rehypeParse, { fragment: true })
     .use(rehypeDocument, {
       title: meta.title || 'book',
-      css: 'styles/tailwind.css',
+      css: './styles/index.css',
     }) // document should be after sanitize
     .use(rehypeRewrite, {
       rewrite: (node) => {
@@ -88,6 +91,12 @@ const main = async () => {
             },
           }
           node.children = [cover, toc, ...node.children]
+        }
+        if (node.type == 'element' && node.tagName == 'img') {
+          node.properties.src = `./images/${node.properties.src.replace(
+            './',
+            ''
+          )}`
         }
       },
     })
