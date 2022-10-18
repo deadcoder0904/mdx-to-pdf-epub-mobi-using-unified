@@ -30,7 +30,7 @@ Bottom left we display the title of the book, bottom right the page using a CSS 
     border-top: 0.25pt solid #666;
     content: 'Our Dogs';
     font-size: 9pt;
-    @apply text-red-400;
+    color: theme('colors.red.400');
   }
   @bottom-right {
     margin: 10pt 0 30pt 0;
